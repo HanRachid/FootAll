@@ -16,7 +16,8 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
+Route::get('/home', function () {
+
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
@@ -35,8 +36,18 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/test', function () {
-    return Inertia::render('Home');
+Route::get('/', function () {
+    return Inertia::render('Home', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+
+    ]);
+});
+
+Route::get('schedule', function () {
+    return Inertia::render('Schedule');
 });
 
 require __DIR__.'/auth.php';
